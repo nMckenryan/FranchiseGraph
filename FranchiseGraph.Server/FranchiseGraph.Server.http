@@ -1,0 +1,6 @@
+@FranchiseGraph.Server_HostAddress = http://localhost:5086
+
+GET {{FranchiseGraph.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

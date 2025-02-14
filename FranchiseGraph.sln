@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35806.99 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "franchisegraph.client", "franchisegraph.client\franchisegraph.client.esproj", "{2AA8767B-2BB0-6FFA-B498-574D212CA173}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FranchiseGraph.Server", "FranchiseGraph.Server\FranchiseGraph.Server.csproj", "{F88A3DC8-C6DA-4F4E-9C0E-57BB9033CD87}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AA8767B-2BB0-6FFA-B498-574D212CA173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AA8767B-2BB0-6FFA-B498-574D212CA173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AA8767B-2BB0-6FFA-B498-574D212CA173}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2AA8767B-2BB0-6FFA-B498-574D212CA173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AA8767B-2BB0-6FFA-B498-574D212CA173}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AA8767B-2BB0-6FFA-B498-574D212CA173}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F88A3DC8-C6DA-4F4E-9C0E-57BB9033CD87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F88A3DC8-C6DA-4F4E-9C0E-57BB9033CD87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F88A3DC8-C6DA-4F4E-9C0E-57BB9033CD87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F88A3DC8-C6DA-4F4E-9C0E-57BB9033CD87}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B649D4C-D8E1-49A3-988C-1BCE7A3C113E}
+	EndGlobalSection
+EndGlobal
