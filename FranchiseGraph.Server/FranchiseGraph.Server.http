@@ -3,4 +3,6 @@
 GET {{FranchiseGraph.Server_HostAddress}}/weatherforecast/
 Accept: application/json
 
+GET {{FranchiseGraph.Server_HostAddress}}/getOMDBData/
+Accept: application/json
 ###
