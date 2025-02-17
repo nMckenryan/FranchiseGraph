@@ -2,6 +2,10 @@
 <p>
   {{forecasts.length}}
 </p>
+
+  <!--               [movieDataSample]="movies" -->
+<chart-component></chart-component>
+
 <table *ngIf="movies">
   <thead>
     <tr>
@@ -12,11 +16,6 @@
       <th>ImdbRating</th>
     </tr>
   </thead>
-
-  <!--               [movieDataSample]="movies" -->
-  <line-chart></line-chart>
-
-
   <tbody>
     <tr *ngFor="let movie of movies">
       <td>{{ movie.Title }}</td>

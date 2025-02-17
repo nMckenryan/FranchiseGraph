@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { LineChartComponent } from './line-chart/line-chart.component';
+
 interface WeatherForecast {
   date: string;
   temperatureC: number;
@@ -19,8 +19,7 @@ export interface OMDBResponse {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  standalone: false,
-  styleUrl: './app.component.css'
+  standalone: false
 })
 export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];

@@ -4,16 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LineChartComponent } from './line-chart/line-chart.component';
+import { ChartComponent } from './Chart/chart.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LineChartComponent
+    AppComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule, ChartComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
