@@ -7,10 +7,11 @@ const PROXY_CONFIG = [
   {
     context: [
       "/weatherforecast",
-      "/getOMDBData"
+      "/OMDB/getOMDBData"
     ],
     target,
-    secure: false
+    secure: false,
+    "logLevel": "debug"
   }
 ]
 

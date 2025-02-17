@@ -1,8 +1,9 @@
 import { Component, Input } from "@angular/core";
 import { AgCharts } from "ag-charts-angular";
-import { AgLineSeriesOptions } from "ag-charts-community";
+import { AgChartThemeName, AgLineSeriesOptions } from "ag-charts-types";
 
-interface OMDBResponse {
+
+export interface OMDBResponse {
   Title: string;
   Year: string;
   Poster: string;
@@ -15,9 +16,7 @@ interface OMDBResponse {
   selector: "chart-component",
   standalone: true,
   imports: [AgCharts],
-  template: `<ag-charts
-        [options]="options"
-    ></ag-charts>
+  template: `<ag-charts [options]="options"></ag-charts>
 `,
 })
 
@@ -75,7 +74,7 @@ export class ChartComponent {
     this.options = {
       // Data: Data to be displayed in the chart
       data: this.movieDataSample,
-      theme: "ag-vivid-dark",
+      theme: "ag-vivid-dark" as AgChartThemeName,
       // Series: Defines which chart type and data to use
       series: [
         {

@@ -4,7 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ChartComponent } from './Chart/chart.component';
+import { ChartComponent } from "./Chart/ChartComponent";
+import { MatCardModule } from '@angular/material/card';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 @NgModule({
@@ -13,9 +15,11 @@ import { ChartComponent } from './Chart/chart.component';
   ],
   imports: [
     BrowserModule, HttpClientModule,
-    AppRoutingModule, ChartComponent
+    AppRoutingModule, ChartComponent, MatCardModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

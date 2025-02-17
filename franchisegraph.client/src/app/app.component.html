@@ -1,47 +1,28 @@
-<p *ngIf="!movies"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
-<p>
-  {{forecasts.length}}
-</p>
+<!-- <p *ngIf="!movies"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
+ -->
+<mat-card appearance="outlined">
+    <mat-card-content>
+        <chart-component/>
 
-  <!--               [movieDataSample]="movies" -->
-<chart-component></chart-component>
-
-<table *ngIf="movies">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Year</th>
-      <th>Poster</th>
-      <th>Metascore</th>
-      <th>ImdbRating</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let movie of movies">
-      <td>{{ movie.Title }}</td>
-      <td>{{ movie.Year }}</td>
-      <td>{{ movie.Poster }}</td>
-      <td>{{ movie.Metascore }}</td>
-      <td>{{ movie.ImdbRating }}</td>
-    </tr>
-  </tbody>
-</table>
-
-<table *ngIf="forecasts">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.date }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
-    </tr>
-  </tbody>
-</table>
+        <table *ngIf="movies" class="text-white">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Poster</th>
+                    <th>Metascore</th>
+                    <th>ImdbRating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let movie of movies">
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.year }}</td>
+                    <td><img [src]="movie.poster" alt="{{ movie.title }} poster" width="50"></td>
+                    <td>{{ movie.metascore }}</td>
+                    <td>{{ movie.imdbRating }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card-content>
+</mat-card>
