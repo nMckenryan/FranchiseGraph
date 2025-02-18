@@ -22,14 +22,22 @@ public class OMDBController : ControllerBase
     }
 
     [HttpGet("getOMDBData")]
-    public IEnumerable<OMDBResponse> Get()
+    public async Task<IEnumerable<OMDBResponse>> GetAsync()
     {
+        string search = "?t=spiderman";
+        string request = url + search + "&apikey=" + _apiKey;
+
+        using HttpResponseMessage response = await _httpClient.GetAsync(request);
+
+        response.EnsureSuccessStatusCode();
+        var jsonResponse = await response.Content.ReadFromJsonAsync<JsonDocument>();
+
+        OMDBResponse omdbResponse = JsonSerializer.Deserialize<OMDBResponse>(jsonResponse);
+
         // Return some sample data or fetch from a database
         return new List<OMDBResponse>
             {
-                new OMDBResponse { Title = "Inception", Year = "2010", Poster = "https://example.com/inception.jpg", Metascore = "74", ImdbRating = 8.8f },
-                                new OMDBResponse { Title = "Inception", Year = "2010", Poster = "https://example.com/inception.jpg", Metascore = "745", ImdbRating = 8.8f },
-                // Add more sample data
+                omdbResponse
             };
     }
 }
