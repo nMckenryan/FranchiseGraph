@@ -2,7 +2,7 @@
  -->
 <mat-card appearance="outlined">
     <mat-card-content>
-        <chart-component/>
+        <chart-component [movies]="movies"/>
 
         <table *ngIf="movies" class="text-white">
             <thead>

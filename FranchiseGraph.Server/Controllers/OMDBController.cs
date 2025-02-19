@@ -27,17 +27,33 @@ public class OMDBController : ControllerBase
         string search = "?t=" + franchiseName;
         string request = url + search + "&apikey=" + _apiKey;
 
-        HttpResponseMessage response = await _httpClient.GetAsync(request);
 
-        response.EnsureSuccessStatusCode();
-        var jsonResponse = await response.Content.ReadFromJsonAsync<JsonDocument>();
+        try
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync(request);
 
-        OMDBResponse omdbResponse = JsonSerializer.Deserialize<OMDBResponse>(jsonResponse);
 
-        // Return some sample data or fetch from a database
-        return new List<OMDBResponse>
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError($"Failed to fetch data from OMDB API. Status Code: {response.StatusCode}");
+                return null;
+            }
+
+            var jsonResponse = await response.Content.ReadFromJsonAsync<JsonDocument>();
+
+            OMDBResponse omdbResponse = JsonSerializer.Deserialize<OMDBResponse>(jsonResponse);
+
+
+            // Return some sample data or fetch from a database
+            return new List<OMDBResponse>
             {
                 omdbResponse
             };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while fetching data from OMDB API");
+            return null;
+        }
     }
 }

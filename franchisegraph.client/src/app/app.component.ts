@@ -18,15 +18,16 @@ interface Movie {
 
 export class AppComponent implements OnInit {
   public movies: any[] = [];
+  public searchTerm: string = 'captain america';
 
   constructor(private http: HttpClient) {
-    this.getMovies();
+    this.getMovies(this.searchTerm);
   }
 
   ngOnInit(): void { }
 
-  getMovies() {
-    this.http.get<any[]>('/OMDB/getOMDBData').subscribe(
+  getMovies(searchTerm: string) {
+    this.http.get<any[]>(`/OMDB/getOMDBData?franchiseName=${searchTerm}`).subscribe(
       (result) => {
         this.movies = result;
       },
