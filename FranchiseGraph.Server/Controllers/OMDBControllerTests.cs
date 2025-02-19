@@ -43,12 +43,13 @@ namespace FranchiseGraph.Server.Controllers
                 httpClient);
         }
 
+
+
         [Fact]
-        public async Task GetAsync_gets_results_of_right_type()
+        public async Task GetAsync_gets_results_of_right_List_type()
         {
             // Arrange
             var oMDBController = this.CreateOMDBController();
-            var expectedUrl = "https://www.omdbapi.com/?apikey=some_valid_api_key&s=spiderman";
 
             mockHttpMessageHandler.Protected()
                 .Setup<Task<HttpResponseMessage>>(

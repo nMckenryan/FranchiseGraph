@@ -21,11 +21,6 @@ public class OMDBController : ControllerBase
         _apiKey = configuration["OMDB:ApiKey"] ?? throw new InvalidOperationException("OMDB API key is not set.");
     }
 
-    public int testThin(int a, int b)
-    {
-        return a + b;
-    }
-
     [HttpGet("getOMDBData")]
     public async Task<IEnumerable<OMDBResponse>> GetAsync(string franchiseName)
     {
