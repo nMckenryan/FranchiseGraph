@@ -14,20 +14,25 @@ public class OMDBController : ControllerBase
 
     private readonly ILogger<OMDBController> _logger;
 
-    public OMDBController(ILogger<OMDBController> logger, IConfiguration configuration)
+    public OMDBController(ILogger<OMDBController> logger, IConfiguration configuration, HttpClient httpClient)
     {
-        _httpClient = new HttpClient();
+        _httpClient = httpClient;
         _logger = logger;
         _apiKey = configuration["OMDB:ApiKey"] ?? throw new InvalidOperationException("OMDB API key is not set.");
     }
 
-    [HttpGet("getOMDBData")]
-    public async Task<IEnumerable<OMDBResponse>> GetAsync()
+    public int testThin(int a, int b)
     {
-        string search = "?t=spiderman";
+        return a + b;
+    }
+
+    [HttpGet("getOMDBData")]
+    public async Task<IEnumerable<OMDBResponse>> GetAsync(string franchiseName)
+    {
+        string search = "?t=" + franchiseName;
         string request = url + search + "&apikey=" + _apiKey;
 
-        using HttpResponseMessage response = await _httpClient.GetAsync(request);
+        HttpResponseMessage response = await _httpClient.GetAsync(request);
 
         response.EnsureSuccessStatusCode();
         var jsonResponse = await response.Content.ReadFromJsonAsync<JsonDocument>();
