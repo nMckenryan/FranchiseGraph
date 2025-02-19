@@ -1,4 +1,3 @@
-
 namespace FranchiseGraph.Server
 {
     public class Program
@@ -29,7 +28,6 @@ namespace FranchiseGraph.Server
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

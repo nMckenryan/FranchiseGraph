@@ -14,22 +14,30 @@ public class OMDBController : ControllerBase
 
     private readonly ILogger<OMDBController> _logger;
 
-    public OMDBController(ILogger<OMDBController> logger, IConfiguration configuration)
+    public OMDBController(ILogger<OMDBController> logger, IConfiguration configuration, HttpClient httpClient)
     {
-        _httpClient = new HttpClient();
+        _httpClient = httpClient;
         _logger = logger;
         _apiKey = configuration["OMDB:ApiKey"] ?? throw new InvalidOperationException("OMDB API key is not set.");
     }
 
     [HttpGet("getOMDBData")]
-    public IEnumerable<OMDBResponse> Get()
+    public async Task<IEnumerable<OMDBResponse>> GetAsync(string franchiseName)
     {
+        string search = "?t=" + franchiseName;
+        string request = url + search + "&apikey=" + _apiKey;
+
+        HttpResponseMessage response = await _httpClient.GetAsync(request);
+
+        response.EnsureSuccessStatusCode();
+        var jsonResponse = await response.Content.ReadFromJsonAsync<JsonDocument>();
+
+        OMDBResponse omdbResponse = JsonSerializer.Deserialize<OMDBResponse>(jsonResponse);
+
         // Return some sample data or fetch from a database
         return new List<OMDBResponse>
             {
-                new OMDBResponse { Title = "Inception", Year = "2010", Poster = "https://example.com/inception.jpg", Metascore = "74", ImdbRating = 8.8f },
-                                new OMDBResponse { Title = "Inception", Year = "2010", Poster = "https://example.com/inception.jpg", Metascore = "745", ImdbRating = 8.8f },
-                // Add more sample data
+                omdbResponse
             };
     }
 }
