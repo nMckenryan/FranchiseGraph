@@ -1,4 +1,4 @@
-﻿namespace FranchiseGraph.Server
+﻿namespace FranchiseGraph.Server.Model
 {
     public class OMDBResponse
     {
