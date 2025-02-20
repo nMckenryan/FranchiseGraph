@@ -1,10 +1,13 @@
 ﻿using FranchiseGraph.Server.Controllers;
+using FranchiseGraph.Server.Model;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Moq.Protected;
 using System;
 using System.Net;
+using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -26,16 +29,12 @@ namespace FranchiseGraph.Server.Controllers
             this.mockConfiguration = this.mockRepository.Create<IConfiguration>();
             this.mockHttpMessageHandler = new Mock<HttpMessageHandler>();
 
-
             this.mockConfiguration.Setup(c => c["OMDB:ApiKey"]).Returns("some_valid_api_key");
         }
-
 
         private OMDBController CreateOMDBController()
         {
             var httpClient = new HttpClient(this.mockHttpMessageHandler.Object);
-
-
 
             return new OMDBController(
                 this.mockLogger.Object,
@@ -43,13 +42,28 @@ namespace FranchiseGraph.Server.Controllers
                 httpClient);
         }
 
-
-
         [Fact]
-        public async Task GetAsync_gets_results_of_right_List_type()
+        public async Task GetAsync_Get_TMDB_Collection_Head()
         {
             // Arrange
             var oMDBController = this.CreateOMDBController();
+
+            var collectionResult = new CollectionResult("bgp",
+               1,
+                "jim",
+               "el jim",
+               "overview",
+                "http"
+            );
+
+            var collectionResponse = new List<CollectionResponse>
+                    {
+                        new CollectionResponse(1, new List<CollectionResult> { collectionResult }, 1, 1)
+                    };
+
+            var jsonContent = new StringContent(JsonSerializer.Serialize(collectionResponse));
+
+            jsonContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             mockHttpMessageHandler.Protected()
                 .Setup<Task<HttpResponseMessage>>(
@@ -60,15 +74,15 @@ namespace FranchiseGraph.Server.Controllers
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent("{ \"Title\":\"Spiderman\",\"Year\":\"2002\"}") // Return a valid JSON response
+                    Content = jsonContent
                 });
+
             // Act
-            var result = await oMDBController.GetAsync("spiderman");
+            var result = await oMDBController.GetTMDBCollectionHead("spiderman");
 
-            //Assert.IsType<List<OMDBResponse>>(result);
-
+            // Assert
             Assert.NotNull(result);
-            Assert.IsType<List<OMDBResponse>>(result);
+            Assert.IsType<List<CollectionResponse>>(result);
         }
     }
 }
