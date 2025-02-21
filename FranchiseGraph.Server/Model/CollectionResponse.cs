@@ -7,14 +7,6 @@ namespace FranchiseGraph.Server.Model
         public List<CollectionResult> Results { get; set; }
         public int TotalPages { get; set; }
         public int TotalResults { get; set; }
-
-        public CollectionResponse(int page, List<CollectionResult> results, int totalPages, int totalResults)
-        {
-            Page = page;
-            results = new List<CollectionResult>();
-            TotalPages = totalPages;
-            TotalResults = totalResults;
-        }
     }
 
     public class CollectionResult

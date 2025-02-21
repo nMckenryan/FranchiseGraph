@@ -3,6 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, startWith, map } from 'rxjs';
 
+interface Franchise {
+  BackdropPath: string;
+  Id: number;
+  Name: string;
+  PosterPath: string;
+  Type: string;
+}
+
 interface Movie {
   Title: string;
   Year: string;
@@ -19,14 +27,16 @@ interface Movie {
 
 
 export class AppComponent implements OnInit {
-  public movies: any[] = [];
-  public searchTerm: string = 'captain america';
+  public movies: Movie[] = [];
+  public franchise: Franchise[] = [];
+  public searchTerm: string = '';
+
   myControl = new FormControl('');
-  options: string[] = ['One', 'Two', 'Three'];
+  options: string[] = this.movies.map((movie) => movie.Title);
   filteredOptions!: Observable<string[]>;
 
   constructor(private http: HttpClient) {
-    this.getMovies(this.searchTerm);
+    this.getMovies({ searchTerm: this.searchTerm });
   }
 
   ngOnInit() {
@@ -41,7 +51,18 @@ export class AppComponent implements OnInit {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  getMovies(searchTerm: string) {
+  getFranchises({ franchise }: { franchise: string; }) {
+    this.http.get<any[]>(`/OMDB/getTMDBCollectionHead?collectionSearch=${franchise}`).subscribe(
+      (result) => {
+        this.movies = result;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  getMovies({ searchTerm }: { searchTerm: string; }) {
     this.http.get<any[]>(`/OMDB/getOMDBData?franchiseName=${searchTerm}`).subscribe(
       (result) => {
         this.movies = result;

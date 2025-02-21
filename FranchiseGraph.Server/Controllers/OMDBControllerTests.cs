@@ -29,7 +29,7 @@ namespace FranchiseGraph.Server.Controllers
             this.mockConfiguration = this.mockRepository.Create<IConfiguration>();
             this.mockHttpMessageHandler = new Mock<HttpMessageHandler>();
 
-            this.mockConfiguration.Setup(c => c["OMDB:ApiKey"]).Returns("some_valid_api_key");
+            this.mockConfiguration.Setup(c => c["TheMovieDB:APIToken"]).Returns("some_valid_api_key");
         }
 
         private OMDBController CreateOMDBController()
@@ -45,21 +45,13 @@ namespace FranchiseGraph.Server.Controllers
         [Fact]
         public async Task GetAsync_Get_TMDB_Collection_Head()
         {
+
             // Arrange
             var oMDBController = this.CreateOMDBController();
 
-            var collectionResult = new CollectionResult("bgp",
-               1,
-                "jim",
-               "el jim",
-               "overview",
-                "http"
-            );
+            var collectionResult = new CollectionResult("bgp", 1, "name", "original_name", "overview", "poster_path");
 
-            var collectionResponse = new List<CollectionResponse>
-                    {
-                        new CollectionResponse(1, new List<CollectionResult> { collectionResult }, 1, 1)
-                    };
+            var collectionResponse = new List<CollectionResult> { collectionResult };
 
             var jsonContent = new StringContent(JsonSerializer.Serialize(collectionResponse));
 
