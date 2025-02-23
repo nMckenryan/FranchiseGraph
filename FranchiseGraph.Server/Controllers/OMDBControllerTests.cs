@@ -1,14 +1,9 @@
-﻿using FranchiseGraph.Server.Controllers;
-using FranchiseGraph.Server.Model;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+﻿using FranchiseGraph.Server.Model;
 using Moq;
 using Moq.Protected;
-using System;
+using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace FranchiseGraph.Server.Controllers
@@ -43,18 +38,21 @@ namespace FranchiseGraph.Server.Controllers
         }
 
         [Fact]
-        public async Task GetAsync_Get_TMDB_Collection_Head()
+        public async Task GetTMDBCollectionHead_Returns_CollectionResults()
         {
-
             // Arrange
             var oMDBController = this.CreateOMDBController();
 
-            var collectionResult = new CollectionResult("bgp", 1, "name", "original_name", "overview", "poster_path");
+            var collectionResponse = new CollectionResponse
+            {
+                Results = new List<CollectionResult>
+                {
+                    new CollectionResult(null, 1241, "Harry Potter Collection", null,
+                        "The Harry Potter films are a fantasy series based on the series of seven Harry Potter novels by British writer J. K. Rowling.", null)
+                }
+            };
 
-            var collectionResponse = new List<CollectionResult> { collectionResult };
-
-            var jsonContent = new StringContent(JsonSerializer.Serialize(collectionResponse));
-
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(collectionResponse));
             jsonContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             mockHttpMessageHandler.Protected()
@@ -70,11 +68,13 @@ namespace FranchiseGraph.Server.Controllers
                 });
 
             // Act
-            var result = await oMDBController.GetTMDBCollectionHead("spiderman");
+            var result = await oMDBController.GetTMDBCollectionHead("Harry Potter");
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsType<List<CollectionResponse>>(result);
+            Assert.IsType<List<CollectionResult>>(result);
+            Assert.Single(result);
+            Assert.Equal("Harry Potter Collection", result.First().Name);
         }
     }
 }

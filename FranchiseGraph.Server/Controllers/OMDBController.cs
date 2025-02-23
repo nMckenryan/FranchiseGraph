@@ -1,13 +1,8 @@
-using FranchiseGraph.Server.Model;
+﻿using FranchiseGraph.Server.Model;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Security.Principal;
-using System.Text.Json;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace FranchiseGraph.Server.Controllers;
-
-
 
 [ApiController]
 [Route("[controller]")]
@@ -34,30 +29,15 @@ public class OMDBController : ControllerBase
         try
         {
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _apiKey);
-            //HttpResponseMessage response = await _httpClient.GetAsync(urlTVDB);
             var response = await _httpClient.GetAsync(urlTVDB);
 
             response.EnsureSuccessStatusCode();
 
             string responseBody = await response.Content.ReadAsStringAsync();
-            //if (!response.IsSuccessStatusCode)
-            //{
-            //    _logger.LogError($"Failed to fetch collection data from TMDB API. Status Code: {response.StatusCode}");
-            //    return null;
-            //}
-
-            //var jsonResponse = await response.Content.ReadFromJsonAsync<JsonDocument>();
-
-
 
             CollectionResponse collectionResponse = JsonConvert.DeserializeObject<CollectionResponse>(responseBody);
 
-
-
-            // Return some sample data or fetch from a database
-            return collectionResponse.Results;
-
-
+            return collectionResponse?.Results ?? Enumerable.Empty<CollectionResult>();
         }
         catch (Exception ex)
         {
