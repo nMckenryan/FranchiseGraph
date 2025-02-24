@@ -6,22 +6,22 @@ namespace FranchiseGraph.Server.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class OMDBController : ControllerBase
+public class TMDBRequestController : ControllerBase
 {
     private string url = "https://www.omdbapi.com/";
     private HttpClient _httpClient;
     private readonly string _apiKey;
 
-    private readonly ILogger<OMDBController> _logger;
+    private readonly ILogger<TMDBRequestController> _logger;
 
-    public OMDBController(ILogger<OMDBController> logger, IConfiguration configuration, HttpClient httpClient)
+    public TMDBRequestController(ILogger<TMDBRequestController> logger, IConfiguration configuration, HttpClient httpClient)
     {
         _httpClient = httpClient;
         _logger = logger;
         _apiKey = configuration["TheMovieDB:APIToken"] ?? throw new InvalidOperationException("TMDB API key is not set.");
     }
 
-    [HttpGet("getOMDBData")]
+    [HttpGet("retrieveTMDBCollectionData")]
     public async Task<IEnumerable<CollectionResult>> retrieveCollection(string collectionSearch)
     {
         string urlTVDB = "https://api.themoviedb.org/3/search/collection?query=" + collectionSearch + "&include_adult=false&language=en-US";

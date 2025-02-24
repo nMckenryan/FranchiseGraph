@@ -12,7 +12,7 @@ namespace FranchiseGraph.Server.Controllers
     {
         private MockRepository mockRepository;
 
-        private Mock<ILogger<OMDBController>> mockLogger;
+        private Mock<ILogger<TMDBRequestController>> mockLogger;
         private Mock<IConfiguration> mockConfiguration;
         private Mock<HttpMessageHandler> mockHttpMessageHandler;
 
@@ -20,18 +20,18 @@ namespace FranchiseGraph.Server.Controllers
         {
             this.mockRepository = new MockRepository(MockBehavior.Loose);
 
-            this.mockLogger = this.mockRepository.Create<ILogger<OMDBController>>();
+            this.mockLogger = this.mockRepository.Create<ILogger<TMDBRequestController>>();
             this.mockConfiguration = this.mockRepository.Create<IConfiguration>();
             this.mockHttpMessageHandler = new Mock<HttpMessageHandler>();
 
             this.mockConfiguration.Setup(c => c["TheMovieDB:APIToken"]).Returns("some_valid_api_key");
         }
 
-        private OMDBController CreateOMDBController()
+        private TMDBRequestController CreateOMDBController()
         {
             var httpClient = new HttpClient(this.mockHttpMessageHandler.Object);
 
-            return new OMDBController(
+            return new TMDBRequestController(
                 this.mockLogger.Object,
                 this.mockConfiguration.Object,
                 httpClient);
