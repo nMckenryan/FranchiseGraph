@@ -1,0 +1,17 @@
+<form class="w-full min-w-[150px] max-w-[500px]">
+                <mat-form-field class="w-full">
+                    <mat-label>Franchise</mat-label>
+                    <input type="text"
+                           placeholder="Pick a Franchise"
+                           aria-label="Number"
+                           matInput
+                           [formControl]="myControl"
+                           [matAutocomplete]="auto"
+                    >
+                    <mat-autocomplete #auto="matAutocomplete">
+                        @for (option of filteredOptions | async; track option) {
+                        <mat-option [value]="option">{{option}}</mat-option>
+                        }
+                    </mat-autocomplete>
+                </mat-form-field>
+            </form>
