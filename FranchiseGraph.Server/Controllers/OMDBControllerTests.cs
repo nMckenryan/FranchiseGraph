@@ -38,7 +38,7 @@ namespace FranchiseGraph.Server.Controllers
         }
 
         [Fact]
-        public async Task GetTMDBCollectionHead_Returns_CollectionResults()
+        public async Task getTMDBCollectionHead_Returns_CollectionResults()
         {
             // Arrange
             var oMDBController = this.CreateOMDBController();
@@ -68,7 +68,7 @@ namespace FranchiseGraph.Server.Controllers
                 });
 
             // Act
-            var result = await oMDBController.GetTMDBCollectionHead("Harry Potter");
+            var result = await oMDBController.retrieveCollection("Harry Potter");
 
             // Assert
             Assert.NotNull(result);

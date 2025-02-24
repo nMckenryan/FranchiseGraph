@@ -2,15 +2,13 @@ import { Component, Input } from "@angular/core";
 import { AgCharts } from "ag-charts-angular";
 import { AgChartThemeName, AgLineSeriesOptions } from "ag-charts-types";
 
-
-export interface OMDBResponse {
+export interface Movie {
   Title: string;
   Year: string;
   Poster: string;
   Metascore: string;
   ImdbRating: number;
 }
-
 
 @Component({
   selector: "chart-component",
@@ -20,11 +18,10 @@ export interface OMDBResponse {
 `,
 })
 
-
 export class ChartComponent {
   public options;
 
-  @Input() movies: OMDBResponse[] = [];
+  @Input() movies: Movie[] = [];
 
   constructor() {
     this.options = {

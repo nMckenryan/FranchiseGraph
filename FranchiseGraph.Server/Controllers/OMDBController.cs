@@ -21,8 +21,8 @@ public class OMDBController : ControllerBase
         _apiKey = configuration["TheMovieDB:APIToken"] ?? throw new InvalidOperationException("TMDB API key is not set.");
     }
 
-    [HttpGet("getTMDBCollectionHead")]
-    public async Task<IEnumerable<CollectionResult>> GetTMDBCollectionHead(string collectionSearch)
+    [HttpGet("getOMDBData")]
+    public async Task<IEnumerable<CollectionResult>> retrieveCollection(string collectionSearch)
     {
         string urlTVDB = "https://api.themoviedb.org/3/search/collection?query=" + collectionSearch + "&include_adult=false&language=en-US";
 
