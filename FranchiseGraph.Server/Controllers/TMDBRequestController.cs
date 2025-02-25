@@ -8,7 +8,6 @@ namespace FranchiseGraph.Server.Controllers;
 [Route("[controller]")]
 public class TMDBRequestController : ControllerBase
 {
-    private string url = "https://www.omdbapi.com/";
     private HttpClient _httpClient;
     private readonly string _apiKey;
 
@@ -21,10 +20,10 @@ public class TMDBRequestController : ControllerBase
         _apiKey = configuration["TheMovieDB:APIToken"] ?? throw new InvalidOperationException("TMDB API key is not set.");
     }
 
-    [HttpGet("retrieveTMDBCollectionData")]
+    [HttpGet("getTMDBCollectionData")]
     public async Task<IEnumerable<CollectionResult>> retrieveCollection(string collectionSearch)
     {
-        string urlTVDB = "https://api.themoviedb.org/3/search/collection?query=" + collectionSearch + "&include_adult=false&language=en-US";
+        string urlTVDB = $"https://api.themoviedb.org/3/search/collection?query={collectionSearch}&include_adult=false&language=en-US";
 
         try
         {
@@ -46,34 +45,28 @@ public class TMDBRequestController : ControllerBase
         }
     }
 
-    //[HttpGet("getTMDBCollectionRecords")]
-    //public async Task<IEnumerable<CollectionDetail>> GetTMDBCollectionRecords(int collectionId)
-    //{
-    //    string urlTVDB = "https://api.themoviedb.org/3/search/collection/" + collectionId;
+    [HttpGet("getMoviesFromCollection")]
+    public async Task<IEnumerable<Part>> retrieveMoviesFromCollection(int collectionId)
+    {
+        string urlTVDB = $"https://api.themoviedb.org/3/collection/{collectionId}";
 
-    //    try
-    //    {
-    //        HttpResponseMessage response = await _httpClient.GetAsync(urlTVDB);
+        try
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _apiKey);
+            var response = await _httpClient.GetAsync(urlTVDB);
 
-    //        if (!response.IsSuccessStatusCode)
-    //        {
-    //            _logger.LogError($"Failed to fetch collection record data from TMDB API. Status Code: {response.StatusCode}");
-    //            return null;
-    //        }
+            response.EnsureSuccessStatusCode();
 
-    //        var jsonResponse = await response.Content.ReadFromJsonAsync<JsonDocument>();
+            string responseBody = await response.Content.ReadAsStringAsync();
 
-    //        CollectionDetail collectionResponse = JsonSerializer.Deserialize<CollectionDetail>(jsonResponse);
+            Collection collectionResponse = JsonConvert.DeserializeObject<Collection>(responseBody);
 
-    //        return new List<CollectionDetail>
-    //        {
-    //            collectionResponse
-    //        };
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        _logger.LogError(ex, "An error occurred while fetching collection record data from OMDB API");
-    //        return null;
-    //    }
-    //}
+            return collectionResponse.Parts;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while fetching Movie data from Collection ID");
+            return Enumerable.Empty<Part>();
+        }
+    }
 }

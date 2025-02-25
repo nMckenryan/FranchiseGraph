@@ -41,7 +41,7 @@ export class SearchComponentComponent {
   }
 
   getFranchises({ franchise }: { franchise: string; }): Observable<Franchise[]> {
-    return this.http.get<any[]>(`/TMDBRequest/retrieveTMDBCollectionData?collectionSearch=${franchise}`).pipe(
+    return this.http.get<any[]>(`/TMDBRequest/getTMDBCollectionData?collectionSearch=${franchise}`).pipe(
       map(result => {
         return result;
       })

@@ -7,7 +7,8 @@ const PROXY_CONFIG = [
   {
     context: [
       "/weatherforecast",
-      "/TMDBRequest/retrieveTMDBCollectionData"
+      "/TMDBRequest/getTMDBCollectionData",
+      "/TMDBRequest/getMoviesFromCollection"
     ],
     target,
     secure: false,
