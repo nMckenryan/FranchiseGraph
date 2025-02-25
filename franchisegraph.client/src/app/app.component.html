@@ -1,28 +1,11 @@
-<!-- <p *ngIf="!movies"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
- -->
-<mat-card appearance="outlined">
-    <mat-card-content>
-        <chart-component/>
+<div class="bg-gray-600 m-2 h-screen content-center">
+    <p *ngIf="!movies"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
 
-        <table *ngIf="movies" class="text-white">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Year</th>
-                    <th>Poster</th>
-                    <th>Metascore</th>
-                    <th>ImdbRating</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let movie of movies">
-                    <td>{{ movie.title }}</td>
-                    <td>{{ movie.year }}</td>
-                    <td><img [src]="movie.poster" alt="{{ movie.title }} poster" width="50"></td>
-                    <td>{{ movie.metascore }}</td>
-                    <td>{{ movie.imdbRating }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </mat-card-content>
-</mat-card>
+    <mat-card appearance="outlined">
+        <mat-card-content>
+            <h1>Franchise Graph</h1>
+            <search-component/>
+            <chart-component [movies]="movies" />
+        </mat-card-content>
+    </mat-card>
+</div>
