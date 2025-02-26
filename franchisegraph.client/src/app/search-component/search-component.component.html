@@ -8,14 +8,14 @@
                 [formControl]="myControl"
                 [matAutocomplete]="auto"
         >
-        <mat-autocomplete #auto="matAutocomplete">
-            @for (option of filteredOptions | async; track option) {
-                <mat-option [value]="option.name">
-                    <div class="flex flex-row">
-                        <img [src]="option.posterPath" />
-                        <p>{{option.name}}</p>
-                    </div>
-                </mat-option>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onFranchiseSelected($event.option)">
+            @for (option of searchResults | async; track option) {
+            <mat-option [value]="option">
+                <div class="flex flex-row">
+                    <img [src]="option.posterPath" />
+                    <p>{{option.name}}</p>
+                </div>
+            </mat-option>
             }
         </mat-autocomplete>
     </mat-form-field>

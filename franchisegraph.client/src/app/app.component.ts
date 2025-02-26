@@ -1,14 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable, startWith, map } from 'rxjs';
+import { Component, signal } from '@angular/core';
+import { map } from 'rxjs';
 
-interface Movie {
+export interface Movie {
   Title: string;
   Year: string;
   Poster: string;
   Metascore: string;
   ImdbRating: number;
+}
+
+export interface Franchise {
+  backdropPath: string;
+  id: number;
+  name: string;
+  posterPath: string;
+  type: string;
 }
 
 @Component({
@@ -18,7 +25,26 @@ interface Movie {
 })
 
 export class AppComponent {
-  public movies: Movie[] = [];
+  movies = signal(<Movie[]>[]);
+  franchise = signal(<Franchise | null>null);
+
+  franchiseSelected(selectedFranchise: Franchise) {
+    this.franchise.set(selectedFranchise);
+    this.getMovies(selectedFranchise.id).subscribe(movies => {
+      this.movies.set(movies as Movie[]);
+    });
+  }
+
+  constructor(private http: HttpClient) {
+  }
+
+  getMovies(franchiseId: number) {
+    return this.http.get<any[]>(`/TMDBRequest/getMoviesFromCollection?collectionId=${franchiseId}`).pipe(
+      map(result => {
+        return result;
+      })
+    );
+  }
 
   title = 'franchisegraph.client';
 }

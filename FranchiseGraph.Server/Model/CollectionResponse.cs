@@ -38,39 +38,24 @@
 
     public class Part
     {
-        public string BackdropPath { get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
-        public string OriginalTitle { get; set; }
         public string Overview { get; set; }
-        public string PosterPath { get; set; }
-        public string MediaType { get; set; }
-        public bool Adult { get; set; }
-        public string OriginalLanguage { get; set; }
-        public List<int> GenreIds { get; set; }
-        public double Popularity { get; set; }
-        public string ReleaseDate { get; set; }
-        public bool Video { get; set; }
-        public double VoteAverage { get; set; }
-        public int VoteCount { get; set; }
+        public string poster_path { get; set; }
+        public string release_date { get; set; }
+        public double vote_average { get; set; }
+        public int vote_count { get; set; }
 
         public Part(string backdropPath, int id, string title, string originalTitle, string overview, string posterPath, string mediaType, bool adult, string originalLanguage, List<int> genreIds, double popularity, string releaseDate, bool video, double voteAverage, int voteCount)
         {
-            BackdropPath = backdropPath;
+
             Id = id;
             Title = title;
-            OriginalTitle = originalTitle;
             Overview = overview;
-            PosterPath = posterPath;
-            MediaType = mediaType;
-            Adult = adult;
-            OriginalLanguage = originalLanguage;
-            GenreIds = genreIds;
-            Popularity = popularity;
-            ReleaseDate = releaseDate;
-            Video = video;
-            VoteAverage = voteAverage;
-            VoteCount = voteCount;
+            poster_path = posterPath;
+            release_date = releaseDate;
+            vote_average = voteAverage;
+            vote_count = voteCount;
         }
     }
 
@@ -80,7 +65,6 @@
         public string Name { get; set; }
         public string Overview { get; set; }
         public string PosterPath { get; set; }
-        public string BackdropPath { get; set; }
         public List<Part> Parts { get; set; }
         public double Popularity { get; set; }
 
@@ -90,7 +74,6 @@
             Name = name;
             Overview = overview;
             PosterPath = posterPath;
-            BackdropPath = backdropPath;
             Parts = parts;
             Popularity = popularity;
         }

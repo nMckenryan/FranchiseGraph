@@ -1,15 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent, MatOption } from '@angular/material/autocomplete';
 import { Observable, startWith, map, debounceTime, of, switchMap } from 'rxjs';
-
-interface Franchise {
-  backdropPath: string;
-  id: number;
-  name: string;
-  posterPath: string;
-  type: string;
-}
+import { Franchise } from '../app.component';
 
 @Component({
   selector: 'search-component',
@@ -20,12 +14,18 @@ export class SearchComponentComponent {
   public franchise: Franchise[] = [];
   public searchTerm: string = '';
 
+  @Output() franchiseSelected = new EventEmitter<Franchise>();
+
+  sendFranchiseToParent(franchise: Franchise) {
+    this.franchiseSelected.emit(franchise);
+  }
+
   myControl = new FormControl('');
   options: Franchise[] = this.franchise.map((franchise) => franchise);
-  filteredOptions!: Observable<Franchise[]>;
+  searchResults!: Observable<Franchise[]>;
 
   ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.searchResults = this.myControl.valueChanges.pipe(
       debounceTime(300),
       switchMap(value => {
         if (value === null) {
@@ -46,5 +46,9 @@ export class SearchComponentComponent {
         return result;
       })
     );
+  }
+
+  onFranchiseSelected(option: MatOption) {
+    this.sendFranchiseToParent(option.value as Franchise);
   }
 }
