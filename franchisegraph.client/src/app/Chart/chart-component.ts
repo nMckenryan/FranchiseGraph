@@ -7,7 +7,7 @@ import { Movie } from "../app.component";
   selector: "chart-component",
   standalone: true,
   imports: [AgCharts],
-  template: `<ag-charts [options]="options"></ag-charts>
+  template: `<ag-charts class="mx-auto" style="width: 600px; height: 400px; display: block" [options]="options"></ag-charts>
 `,
 })
 
@@ -28,6 +28,7 @@ export class ChartComponent implements OnChanges {
           yKey: "vote_average",
           yName: "Rating",
           interpolation: { type: "smooth" },
+          connectMissingData: false,
         } as AgLineSeriesOptions,
       ],
     };

@@ -1,11 +1,13 @@
 <div class="bg-gray-600 m-2 h-screen content-center">
     <p *ngIf="!movies"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
-
     <mat-card appearance="outlined">
-        <mat-card-content>
-            <h1>Franchise Graph</h1>
-            <search-component (franchiseSelected)="franchiseSelected($event)"/>
-            <chart-component [movies]="movies()" />
+        <mat-card-header>
+            <search-component (franchiseSelected)="franchiseSelected($event)" class="mx-auto" />
+        </mat-card-header>
+        <mat-card-content class="flex items-center justify-center">
+            <chart-component [movies]="movies()" class="chart-container" />
         </mat-card-content>
     </mat-card>
 </div>
+
+
