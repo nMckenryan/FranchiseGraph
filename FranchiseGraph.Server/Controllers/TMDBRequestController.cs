@@ -36,7 +36,11 @@ public class TMDBRequestController : ControllerBase
 
             CollectionResponse collectionResponse = JsonConvert.DeserializeObject<CollectionResponse>(responseBody);
 
-            return collectionResponse?.Results ?? Enumerable.Empty<CollectionResult>();
+            IEnumerable<CollectionResult> collectionList = collectionResponse?.Results;
+
+            if (collectionList == null) return Enumerable.Empty<CollectionResult>();
+
+            return collectionList;
         }
         catch (Exception ex)
         {
@@ -61,7 +65,13 @@ public class TMDBRequestController : ControllerBase
 
             Collection collectionResponse = JsonConvert.DeserializeObject<Collection>(responseBody);
 
-            return collectionResponse.Parts;
+            IEnumerable<Part> parts =
+                from movie in collectionResponse.Parts
+                where movie.vote_average != 0.0
+                orderby movie.release_date
+                select movie;
+
+            return parts;
         }
         catch (Exception ex)
         {

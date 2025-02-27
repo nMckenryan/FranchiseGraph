@@ -20,6 +20,7 @@ export class ChartComponent implements OnChanges {
     this.options = {
       data: this.movies,
       theme: "ag-vivid-dark" as AgChartThemeName,
+      
       series: [
         {
           type: "line",
@@ -27,10 +28,13 @@ export class ChartComponent implements OnChanges {
           xName: "Title",
           yKey: "vote_average",
           yName: "Rating",
+          min: 0,
+          max: 10,
           interpolation: { type: "smooth" },
           connectMissingData: false,
         } as AgLineSeriesOptions,
       ],
+      
     };
   }
 
